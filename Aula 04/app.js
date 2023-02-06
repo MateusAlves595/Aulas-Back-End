@@ -14,7 +14,7 @@ entradaDados.question('Valor: \n', function(numero1){
 
         let valor2 = numero2.replace(',', '.')
 
-        entradaDados.question('Escolha uma operação: [Somar || Subtrair || Multiplicar || Dividir] \n', function(tipoCalculo){
+        entradaDados.question('Escolha uma operação: [SOMAR || SUBTRAIR || MULTIPLICAR || DIVIDIR] \n', function(tipoCalculo){
             
             let operacao = tipoCalculo.toUpperCase()
             let resultado
@@ -25,11 +25,13 @@ entradaDados.question('Valor: \n', function(numero1){
                 console.log('ERRO: Não é possivel calcular se os dados digitados não forem números.')
             else{
 
+                //Chama a função para calcular os valores (função que nós criamos)
                 resultado = matematica.calculadora(valor1, valor2, operacao)
-                if(resultado != false)
-                    console.log(resultado)
-                else
+
+                if(resultado === false)
                     entradaDados.close()
+                else
+                    console.log(resultado)
             }
         })
     })

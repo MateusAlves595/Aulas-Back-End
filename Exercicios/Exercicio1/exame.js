@@ -4,7 +4,6 @@
  * Autor: Mateus Alves da Silva
  * Versão: 1.0
  * ***********************************************************************/
- var media = require('.sistema.js')
 
  const mediaExame = function(media, notaExame) {
 

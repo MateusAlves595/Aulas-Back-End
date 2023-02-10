@@ -1,7 +1,6 @@
 var readline = require ('readline')
-var sistema = require('../Exercicio1/sistema.js')
-var exame = require('../Exercicio1/exame.js')
-const { type } = require('os')
+var sistema = require('./sistema.js')
+var exame = require('./exame')
 
 var entradaDados = readline.createInterface({
     input: process.stdin,
@@ -10,14 +9,15 @@ var entradaDados = readline.createInterface({
 
 let status = true
 
-entradaDados.question('Dígite o nome do Aluno(a): \n', function(nomeAluno){
 
+entradaDados.question('Dígite o nome do Aluno(a): \n', function(nomeAluno){
+    
     if(nomeAluno == ''){
         console.log('ERRO: Você deve informar o nome do aluno')
         status = false
     } else {
 
-        let nomeAluno = nomeAluno
+        let aluno = nomeAluno
         entradaDados.question('Informe o gênero do aluno(a): \n 1 - Feminino\n 2 - Masculino\n',function(generoAluno){
 
             if(generoAluno == ''){
@@ -28,7 +28,7 @@ entradaDados.question('Dígite o nome do Aluno(a): \n', function(nomeAluno){
                 status = false
             }else{
 
-                let generoAluno = generoAluno
+                let generoDoAluno = generoAluno
                 entradaDados.question('Dígite o nome do professor(a) \n', function(nomeEducador){
                     
                     if(nomeEducador == ''){
@@ -36,7 +36,7 @@ entradaDados.question('Dígite o nome do Aluno(a): \n', function(nomeAluno){
                         status = false
                     } else {
 
-                        let nomeEducador = nomeEducador
+                        let educadorr = nomeEducador
                         entradaDados.question('Informe o gênero do professor(a) \n 1 - Feminino\n 2 - Masculino\n', function(generoEducador){
                             
                             if(generoEducador == ''){
@@ -47,21 +47,21 @@ entradaDados.question('Dígite o nome do Aluno(a): \n', function(nomeAluno){
                                 status = false
                             } else{
 
-                                let generoEducador = generoEducador
-                                entradaDados.question('Informe qual o seu curso: \n', function(curso){
+                                let generoDoEducador = generoEducador
+                                entradaDados.question('Informe qual o seu curso: \n', function(nomeCurso){
 
                                     if(curso == ''){
                                         console.log('ERRO: Você deve informar o nome do curso')
                                     } else{
 
-                                        let curso = curso
-                                        entradaDados.question('Informe a disciplina: \n', function(disciplina){
+                                        let curso = nomeCurso
+                                        entradaDados.question('Informe a disciplina: \n', function(nomeDisciplina){
 
                                             if(disciplina == ''){
                                                 console.log('ERRO: Você deve informar a disciplina')
                                             }else{
 
-                                                let disciplina = disciplina
+                                                let disciplina = nomeDisciplina
                                                 entradaDados.question('Informe a nota 1: \n', function(valor1){
                                                     let nota1 = valor1.replace(',', '.')
 

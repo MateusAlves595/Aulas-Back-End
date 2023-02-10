@@ -4,7 +4,6 @@
  * Autor: Mateus Alves da Silva
  * Versão: 1.0
  * ***********************************************************************/
-var exame = require('.exame.js')
 
  const calculoNotas = function() {
 

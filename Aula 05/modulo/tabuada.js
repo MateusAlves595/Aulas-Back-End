@@ -37,8 +37,6 @@ const getTabuada = function (multiplicando, maxMultiplicador) {
     getTabuada(2, 30)
 
 
-
-
     module.exports = {
         getTabuada
     }

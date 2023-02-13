@@ -5,39 +5,54 @@
  * Versão: 1.0
  * ***********************************************************************/
 
- const calculoNotas = function() {
+ const calculoNotas = function(valor1, valor2, valor3, valor4) {
 
-    let media
-    let status = true
-    let situacao
+    let resultado
 
-    const mediaNotas = (valor1, valor2, valor3, valor4) => {
-
-    if(valor1 == '' || valor2 == '' || valor3 == '' || valor4 == ''){
-        console.log('ERRO: Você deve informar todas as notas')
-        status = false
-    } else if(isNaN(valor1) || isNaN(valor2) || isNaN(valor3) || isNaN(valor4)){
-        console.log('ERRO: Você deve dígitar somente numeros')
-        status = false
-    }else if(valor1 < 0 || valor1 > 100 || valor2 < 0 || valor2 > 100 || valor3 < 0 || valor3 > 100 || valor4 < 0 || valor4 > 100){
+    if(valor1 < 0 || valor1 > 100 || valor2 < 0 || valor2 > 100 || valor3 < 0 || valor3 > 100 || valor4 < 0 || valor4 > 100){
         console.log('ERRO: Todas as notas devem estar entre 0 e 100')
-        status = false
     } else {
-        media = Number(valor1) + Number(valor2) + Number(valor3) + Number(valor4) / 4
+        resultado = (Number(valor1) + Number(valor2) + Number(valor3) + Number(valor4)) / 4
 
-        if(media < 50){
-            console.log('Reprovado')
-            situacao = "Reprovado"
-        } else if(media >= 70){
-            console.log('Aprovado')
-            situacao = 'Aprovado'
-        }
-    return media
-   
+    return resultado
  }
 }
 
+const exibirResultado = function(generoAluno, generoEducador, aluno, educador, curso, disciplina, nota1, nota2, nota3, nota4, resultadoFinal){
+
+    let generoA = generoAluno
+    let generoE = generoEducador
+    let nomeA = aluno
+    let nomeE = educador
+    let nomeCurso = curso
+    let nomeDisciplina = disciplina
+    let n1 = nota1
+    let n2 = nota2
+    let n3 = nota3
+    let n4 = nota4
+    let resultado = resultadoFinal
+    let media
+
+    media = (Number(n1) + Number(n2) + Number(n3) + Number(n4)) / 4
+
+        if (media >= 70){
+            status = 'Aprovado'
+        } else if(media < 50){
+            status = 'Reprovado'
+        }  
+
+        console.log(`${generoA} ${nomeA}
+        ${generoE} ${nomeE}
+        Curso: ${nomeCurso}
+        Disciplina: ${nomeDisciplina}
+        Notas: ${n1}, ${n2}, ${n3}, ${n4}
+        Exame: Não fez o exame
+        Média Final: ${resultado}
+        Status: ${status}`)
+
+ } 
+
 module.exports = {
-    calculoNotas
- }
+    calculoNotas,
+    exibirResultado
 }

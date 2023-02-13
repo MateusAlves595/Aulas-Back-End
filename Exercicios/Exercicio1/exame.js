@@ -5,25 +5,18 @@
  * Versão: 1.0
  * ***********************************************************************/
 
- const mediaExame = function(media, notaExame) {
 
-    let resultado
-    let status = true
+ const mediaExame = function(mediaDoAluno, notaDoExame) {
 
-    if(notaExame == ''){
-        console.log('ERRO: Você deve digitar a nota do exame')
-        status = false
-    } else if(isNaN(notaExame)){
-        console.log('ERRO: Você deve digitar um numero')
-        status = false
-    } else if(notaExame < 0 || notaExame > 100){
-        console.log('ERRO: A nota deve ter o valor entre 0 e 100')
-        status = false
-    } else{
-        resultado = Number(notaExame) + Number(media) / 2
-    }
-    return resultado
+    let media = mediaDoAluno
+    let exameNota = notaDoExame
+
+        let mediaExame = (Number(media) + Number(exameNota)) / 2  
+
+        return mediaExame
  }
+
+ 
 
  module.exports = {
      mediaExame

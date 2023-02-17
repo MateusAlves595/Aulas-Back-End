@@ -5,33 +5,27 @@
  * Versão: 1.0
  **************************************************************************/
 
- var tabuada = require('./metodo/tabuada.js')
  var readline = require('readline')
+ var tabuada = require('./metodo/tabuada.js')
 
  var entradaDados = readline.createInterface({
      input : process.stdin,
-     ouutput : process.stdout
+     output : process.stdout
  })
 
- console.log('------------------------------------Tabuada------------------------------------')
- entradaDados.question('Dígite o primeiro número da tabuada: \n', function(primeiroNumero){
+ entradaDados.question('Dígite o primeiro número da tabuada: \n', function (primeiroNumero){
+    let numeroInicial = Number(primeiroNumero)
 
-    numeroInicial = primeiroNumero
+    entradaDados.question('Dígite o numero final da tabuada: \n', function (ultimoNumero){
+        let numeroFinal = Number(ultimoNumero)
 
-    entradaDados.question('Dígite o numero final da tabuada: \n', function(ultimoNumero){
+        entradaDados.question('Dígite qual tabuada você quer ver primeiro: \n', function (primeiraTabuada){
+            let tabuadaInicial = Number(primeiraTabuada)
 
-        numeroFinal = ultimoNumero
+            entradaDados.question('Dígite qua será a ultima tabuada: \n', function (ultimaTabuada){
+                let tabuadaFinal = Number(ultimaTabuada)
 
-        entradaDados.question('Dígite qual tabuada você quer ver primeiro: \n', function(primeiraTabuada){
-
-            tabuadaInicial = primeiraTabuada
-
-            entradaDados.question('Dígite qua será a ultima tabuada: \n', function(ultimaTabuada){
-
-                tabuadaFinal = ultimaTabuada
-
-                let resultado = tabuada.getTabuada(tabuadaInicial, tabuadaFinal, numeroInicial, numeroFinal)
-                console.log(resultado)
+                tabuada.getTabuada(tabuadaInicial, tabuadaFinal, numeroInicial, numeroFinal)
             })
         })
     })

@@ -35,4 +35,27 @@ app.use((request, response, next) => {
 
     //Permite definir quais métodos poderão ser utilizados nas requisições da API
     response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+
+    //Envia para o cors() as regras de permissões
+    app.use(cors())
+
+    next()
+})
+
+//EndPoints
+
+//Async - estabelece uma status de aguarde, assim que processar os dado são devolvidos
+//OBS: Se não usar o async, a requisição é perdida, pois o front acha que a API
+//está fora do ar.
+
+//EndPoint listarEstados
+app.get('/estados', cors(), async function(request, response, next){
+    const estadosCidades = require('./modulo/functions.js')
+    let estados = estadosCidades.getCidades('pr')
+    response.status(200)
+    response.json(estados)
+})
+
+app.listen(8080, function(){
+    console.log('servidor aguardando requisições na porta 8080.')
 })

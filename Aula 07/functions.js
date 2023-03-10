@@ -34,7 +34,7 @@ const getDadosEstado = function (siglaEstado) {
         capital = dadosEstado.capital
         regiao = dadosEstado.regiao
 
-        if (uf == siglaEstado) {
+        if (uf == siglaEstado.toUpperCase()) {
             novoJson.uf = uf
             novoJson.descricao = nome
             novoJson.capital = capital
@@ -104,7 +104,7 @@ const getEstadosRegiao = function (regiaoEstado) {
         return false
     } else
         return novoJson
-    }
+}
 
 const getCapitalPais = function () {
     let capitalJSON = {}

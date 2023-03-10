@@ -149,14 +149,14 @@ const listagemProdutos = function () {
             { nome: 'Mouse', quant: 790, marca: 'Dell', valor: 115, codigo: 7 },
             { nome: 'Mouse', quant: 25, marca: 'Razer', valor: 1800, codigo: 8 }
         ]
- 
+
 
     //Arrays para cores
     let listCoresDellArray = ['Preto', 'Branco', 'Cinza']
     let listCoresLgArray = ['Preto', 'Cinza']
     let listCoresTecladoArray = ['Preto', 'Branco', 'Cinza', 'Rosa', 'Azul']
     let listCoresMouseArray = ['Branco', 'Preto', 'Cinza', 'Azul', 'Verde', 'Rosa', 'Amarelo', 'Vermelho', 'Roxo']
-    
+
     //Arrays para modelos
     let listModelosMonitor = ['LCD', 'LED', 'OLED', '4K']
     let listModelosTeclado = ['Mecânico', 'Semi-Mecânico', 'Membrana', 'Óptico']
@@ -186,28 +186,34 @@ const listagemProdutos = function () {
     //Adicionar modelos aos teclados
     listProdutosJSON.produtos[2].modelos = listModelosTeclado
     listProdutosJSON.produtos[3].modelos = listModelosTeclado
-    listProdutosJSON.produtos[4].modelos= listModelosTeclado
+    listProdutosJSON.produtos[4].modelos = listModelosTeclado
     listProdutosJSON.produtos[5].modelos = listModelosTeclado
 
     // console.log(listProdutosJSON)
-    
-    // console.log('Nome: ' + listProdutosJSON.produtos[1].nome)
-    // console.log('Marca: ' + listProdutosJSON.produtos[1].marca)
-    // console.log('Valor: ' + listProdutosJSON.produtos[1].valor)
-    // console.log('Cor: ' + listProdutosJSON.produtos[1].cores[1])
-    // console.log('Modelo: ' + listProdutosJSON.produtos[1].modelos[1])
 
+    //Percorre o array de produtos para listar os itens
+    listProdutosJSON.produtos.forEach(function (itemProduto) {
+        console.log('Nome: ' + itemProduto.nome)
+        console.log('Marca: ' + itemProduto.marca)
 
-    let tamanhoArray = listProdutosJSON.produtos.length
-    let arrayNome = listProdutosJSON.produtos.nome
-
-    for (let cont = 0; cont < tamanhoArray; cont++){
-        console.log(tamanhoArray[cont])
-
-        for(let cont = 0; cont < arrayNome; cont++){
-            console.log(arrayNome[cont])
+        //Tratamento de erro para quando não existir array de cores
+        if (itemProduto.cores != undefined) {
+            //Percorre o array de cores que está dentro do array de cores
+            itemProduto.cores.forEach(function (itemCor) {
+                console.log('Cores:' + itemCor)
+            })
         }
-    }
+
+        //Tratamento de erro para quando não existir array de modelos
+        if (itemProduto.modelos != undefined) {
+            //Percorre o array de modelos que está dentro do array de produtos
+            itemProduto.modelos.forEach(function (itemModelo) {
+                console.log('Modelos: ' + itemModelo)
+            })
+        }
+
+    })
+
 }
 
 listagemProdutos()

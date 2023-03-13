@@ -27,6 +27,7 @@ const getDadosEstado = function (siglaEstado) {
     let nome
     let capital
     let regiao
+    let status = false
 
     listaGeral.estadosCidades.estados.forEach(function (dadosEstado) {
         uf = dadosEstado.sigla
@@ -39,15 +40,14 @@ const getDadosEstado = function (siglaEstado) {
             novoJson.descricao = nome
             novoJson.capital = capital
             novoJson.regiao = regiao
+            status = true
         }
     })
 
-    if (novoJson == undefined) {
-        return false
-    } else if (novoJson == '') {
-        return false
-    } else{
+    if (status == true) {
         return novoJson
+    } else {
+        return false
     }
 
 }
@@ -63,7 +63,7 @@ const getCapitalEstado = function (siglaEstado) {
         nome = dadosEstado.nome
         capital = dadosEstado.capital
 
-        if (uf == siglaEstado) {
+        if (uf == siglaEstado.toUpperCase()) {
             novoJson.uf = uf
             novoJson.descricao = nome
             novoJson.capital = capital
@@ -74,7 +74,7 @@ const getCapitalEstado = function (siglaEstado) {
         return false
     } else if (novoJson == '') {
         return false
-    } else{
+    } else {
         return novoJson
     }
 }
@@ -83,27 +83,26 @@ const getEstadosRegiao = function (regiaoEstado) {
     let regiao = regiaoEstado.toUpperCase()
     let estados = []
     let novoJson = {}
+    let status = false
 
     const estadosRegiao = listaGeral.estadosCidades.estados.filter(function (estadosDados) {
-        return estadosDados.regiao == regiao
+        return estadosDados.regiao.toUpperCase == regiao
     })
 
     estados = estadosRegiao.map(function (estadosDados) {
+        status = true
         return {
             uf: estadosDados.sigla,
             descricao: estadosDados.nome
         }
     })
 
-    novoJson.regiao = regiaoEstado
-    novoJson.estados = estados
-
-    if (novoJson == undefined) {
-        return false
-    } else if (novoJson == '') {
-        return false
-    } else
+    if (status == true) {
+        novoJson.regiao = regiaoEstado.toUpperCase
+        novoJson.estados = estados
         return novoJson
+    } else
+        return false
 }
 
 const getCapitalPais = function () {

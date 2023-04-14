@@ -79,31 +79,35 @@ const getCapitalEstado = function (siglaEstado) {
     }
 }
 
-const getEstadosRegiao = function (regiaoEstado) {
-    let regiao = regiaoEstado.toUpperCase()
-    let estados = []
-    let novoJson = {}
+const getEstadosRegiao = function (regiao) {
+
+    let jsonEstados = {}
+    let arrayEstados = []
     let status = false
-
-    const estadosRegiao = listaGeral.estadosCidades.estados.filter(function (estadosDados) {
-        return estadosDados.regiao.toUpperCase == regiao
-    })
-
-    estados = estadosRegiao.map(function (estadosDados) {
-        status = true
-        return {
-            uf: estadosDados.sigla,
-            descricao: estadosDados.nome
-        }
-    })
-
+ 
+    listaGeral.estadosCidades.estados.forEach(estado => {
+       if (estado.regiao.toUpperCase() == regiao.toUpperCase()) {
+ 
+          let getUfs = {}
+ 
+          getUfs.uf = estado.sigla
+          getUfs.descricao = estado.nome
+ 
+          arrayEstados.push(getUfs)
+          status = true
+       }
+    });
+ 
+ 
     if (status == true) {
-        novoJson.regiao = regiaoEstado.toUpperCase
-        novoJson.estados = estados
-        return novoJson
-    } else
-        return false
-}
+       jsonEstados.regiao = regiao
+       jsonEstados.estados = arrayEstados
+       return jsonEstados
+    } else {
+       return status
+    }
+ 
+ }
 
 const getCapitalPais = function () {
     let capitalJSON = {}

@@ -145,6 +145,84 @@ app.get('/estadoRegiao/:regiao', cors(), async function(request, response, next)
     response.json(dadosEstado)
 })
 
+app.get('/capitaisPais', cors(), async function(request, response, next){
+    let capitais = estadosCidades.getCapitalPais()
+
+    if(capitais){
+        response.status(200)
+        response.json(capitais)
+    } else {
+        response.status(500)
+    }
+})
+
+app.get('/cidadesEstado/:uf', cors(), async function(request, response, next){
+
+    let statusCode
+    let dadosEstado = {}
+
+    //Recebe a lista do estado que será enviada pela URL da requisição
+    let siglaEstado = request.params.uf
+
+    //Tratamento para validação de entrada de dados incorreta
+    if(siglaEstado == '' || siglaEstado == undefined || siglaEstado.length != 2 || !isNaN(siglaEstado)){
+        statusCode = 400
+        dadosEstado.message = 'Não foi possivel processar pois os dados de entrada (uf) que foram enviados não corresponde ao exigido, confira o valor, pois não pode ser vazio, precisa ser caracteres e ter 2 dígitos,'
+    }else{
+        //Chama a função para retornar os dados do estado
+        let estado = estadosCidades.getCidades(siglaEstado)
+
+        if(estado){
+            statusCode = 200
+            dadosEstado = estado
+        }else{
+            statusCode = 404
+        }
+    }
+    //Retorna o código e o JSON
+    response.status(statusCode)
+    response.json(dadosEstado)
+})
+
+app.get('/v2/cidadesEstado', cors(), async function(request, response, next){
+
+    /**
+      Existem 2 opções para receber variáveis para filtro:
+
+            params - que permite receber a variável a estrutura da URL
+                criada no endPoint (geralmente utilizado para ID (PK))
+            
+            query - Também conhecido como queryString, permite receber uma 
+                ou muitas variáveis para receber filtros avançados    
+     */
+    
+    //Recebe uma variável encaminhada via QueryString
+    let siglaEstado = request.query.uf
+    let statusCode
+    let dadosCidades = {}
+
+
+    //Tratamento para validação de entrada de dados incorreta
+    if(siglaEstado == '' || siglaEstado == undefined || siglaEstado.length != 2 || !isNaN(siglaEstado)){
+        statusCode = 400
+        dadosCidades.message = 'Não foi possivel processar pois os dados de entrada (uf) que foram enviados não corresponde ao exigido, confira o valor, pois não pode ser vazio, precisa ser caracteres e ter 2 dígitos,'
+    }else{
+        //Chama a função para retornar os dados do estado
+        let cidades = estadosCidades.getCidades(siglaEstado)
+
+        if(cidades){
+            statusCode = 200
+            dadosEstado = cidades
+        }else{
+            statusCode = 404
+        }
+
+    }
+    //Retorna o código e o JSON
+    response.status(statusCode)
+    response.json(dadosCidades)
+})
+
 //Roda o serviço da API para ficar aguardando requisições
 app.listen(8080, function(){
     console.log('servidor aguardando requisições na porta 8080.')

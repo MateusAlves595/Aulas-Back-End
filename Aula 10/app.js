@@ -45,13 +45,16 @@ app.use((request, response, next) => {
  * Versão: 1.0
  ************************************/
 
+//Define que os dados que irao chegar no boddy da requisicao sera no padrao json
+const bodyParserJson = bodyParser.json()
+
+ //Import do arquivo da controller que ira solicitar a model os dados do BD
+var controllerAluno = require('./controller/controller_aluno.js')
+
 //EndPoint: Retorna todos os dados de alunos
 app.get('/v1/lion-school/aluno', cors(), async function(request, response){
-    //Import do arquivo da controller que ira solicitar a model os dados do BD
-    let controllerAlunos = require('./controller/controller_aluno.js')
-
     //Recebe os dados da controller do aluno
-    let dadosAluno = await controllerAlunos.getAlunos()
+    let dadosAluno = await controllerAluno.getAlunos()
     
     //Valida se existe registros de aluno
     if(dadosAluno){
@@ -65,8 +68,6 @@ app.get('/v1/lion-school/aluno', cors(), async function(request, response){
 
 //EndPoint: Retorna o aluno filtrando pelo id
 app.get('/v1/lion-school/aluno/id/:id', cors(), async function(request, response){
-    let controllerAluno = require('./controller/controller_aluno.js')
-
     let id = request.params.id
 
     let dadosAluno = await controllerAluno.getBuscarAluno(id)
@@ -81,7 +82,14 @@ app.get('/v1/lion-school/aluno/id/:id', cors(), async function(request, response
 })
 
 //EndPoint: Insere um novo aluno
-app.post('/v1/lion-school/aluno', cors(), async function(request, response){
+app.post('/v1/lion-school/aluno', cors(), bodyParserJson, async function(request, response){
+    //Recebe os dados encaminhados na requisição
+    let dadosBody = request.body
+
+    let resultDadosAluno = await controllerAluno.inserirAluno(dadosBody)
+
+    response.status(resultDadosAluno.status)
+    response.json(resultDadosAluno)
 
 })
 
@@ -97,8 +105,6 @@ app.delete('/v1/lion-school/aluno/:id', cors(), async function(request, response
 
 //EndPoint: Retorna o aluno filtrado pelo nome
 app.get('/v1/lion-school/aluno/nome/:nome', cors(), async function(request, response){
-    let controllerAluno = require('./controller/controller_aluno.js')
-
     let nome = request.params.nome
 
     let dadosAluno = await controllerAluno.getAlunoPorNome(nome)
@@ -113,5 +119,5 @@ app.get('/v1/lion-school/aluno/nome/:nome', cors(), async function(request, resp
 })
 
 app.listen(8080, function(){
-    console.log('Servidor Aguardando  requisiç~ões na porta 8080')
+    console.log('Servidor Aguardando  requisições na porta 8080')
 })

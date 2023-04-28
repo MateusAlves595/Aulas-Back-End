@@ -6,7 +6,34 @@
  * Versão: 1.0
  ***************************************************************************************************************************************************/
 
-const inserirAluno = function(dadosAluno) {
+//Import do arquivo de configuração das variaveis, constantes e funções globais
+var message = require('./modulo/config.js')
+
+ //Import do arquivo DAO para acessar dados do aluno no BD
+ var alunoDAO = require('../model/DAO/alunoDAO.js')
+
+const inserirAluno = async function(dadosAluno) {
+
+    //Validação para tratar campos obrigatórios e quantidade de caracteres
+    if(
+        dadosAluno.nome == ''             || dadosAluno.nome == undefined            || dadosAluno.nome.length > 100           ||
+        dadosAluno.rg == ''               || dadosAluno.rg == undefined              || dadosAluno.rg.length > 15              ||
+        dadosAluno.cpf == ''              || dadosAluno.cpf == undefined             || dadosAluno.cpf.length > 18             ||
+        dadosAluno.data_nascimento == ''  || dadosAluno.data_nascimento == undefined || dadosAluno.data_nascimento.length > 10 ||
+        dadosAluno.email == ''            || dadosAluno.email == undefined           || dadosAluno.email.length > 200
+    ){
+        return message.ERROR_REQUIRED_FIELDS //Status code 400
+    } else {
+
+        //Envia os dados para a model inserir no banco de dados
+        let resultDadosAluno = await alunoDAO.insertAluno(dadosAluno)
+
+        //Valida se o banco de dados inseriu corretamente os dados
+        if(resultDadosAluno)
+            return message.SUCCESS_CREATED_ITEM //Status code 201
+        else
+            return message.ERROR_INTERNAL_SERVER //Status code 500
+    }
 
 }
 
@@ -21,9 +48,6 @@ const deletarAluno = function(id) {
 const getAlunos = async function() {
 
     let dadosAlunosJson = {}
-
-    //Import do arquivo DAO para acessar dados do aluno no BD
-    let alunoDAO = require('../model/DAO/alunoDAO.js')
 
     //Chama a função do arquivo DAO que irá retornar todos os registros do DB
     let dadosAlunos = await alunoDAO.selectAllAlunos()
@@ -73,5 +97,8 @@ const getAlunoPorNome = async function (nome) {
 module.exports = {
     getAlunos,
     getBuscarAluno,
-    getAlunoPorNome
+    getAlunoPorNome,
+    inserirAluno,
+    atualizarAluno,
+    deletarAluno
 }

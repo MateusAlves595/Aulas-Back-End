@@ -87,9 +87,8 @@ const selectAllAlunos = async function() {
 }
 
 const selectByIdAluno = async function(id) {
-    let idAluno = id
 
-    let sql = 'select * from tbl_aluno where id = ' + idAluno
+    let sql = `select * from tbl_aluno where id = ${id}`
 
     let rsAluno = await prisma.$queryRawUnsafe(sql)
 
@@ -112,11 +111,23 @@ const selectByName = async function(nome) {
         return false
 }
 
+const selectLastId = async function() {
+    let sql = `select * from tbl_aluno order by id desc limit 1;`
+
+    let rsAluno = await prisma.$queryRawUnsafe(sql)
+
+    if(rsAluno.length > 0)
+        return rsAluno
+    else
+        return false
+}
+
 module.exports = {
     selectAllAlunos,
     selectByIdAluno,
     selectByName,
     insertAluno,
     deleteAluno,
-    updateAluno
+    updateAluno,
+    selectLastId
 }

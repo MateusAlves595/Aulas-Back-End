@@ -35,8 +35,8 @@ app.use((request, response, next) => {
 
     next()
 })
-//Crud (Create, Read, Update e Delete)
 
+//Crud (Create, Read, Update e Delete)
 
 /************************************
  * Objetivo: API de controle de alunos
@@ -58,14 +58,8 @@ app.get('/v1/lion-school/aluno', cors(), async function (request, response) {
     //Recebe os dados da controller do aluno
     let dadosAluno = await controllerAluno.getAlunos()
 
-    //Valida se existe registros de aluno
-    if (dadosAluno) {
-        response.json(dadosAluno)
-        response.status(200)
-    } else {
-        response.json()
-        response.status(404)
-    }
+    response.status(dadosAluno.status)
+    response.json(dadosAluno)
 })
 
 //EndPoint: Retorna o aluno filtrando pelo id
@@ -74,13 +68,8 @@ app.get('/v1/lion-school/aluno/id/:id', cors(), async function (request, respons
 
     let dadosAluno = await controllerAluno.getBuscarAluno(id)
 
-    if (dadosAluno) {
-        response.json(dadosAluno)
-        response.status(200)
-    } else {
-        response.json()
-        response.status(404)
-    }
+    response.status(dadosAluno.status)
+    response.json(dadosAluno)
 })
 
 //EndPoint: Insere um novo aluno
@@ -136,12 +125,9 @@ app.delete('/v1/lion-school/aluno/:id', cors(), async function (request, respons
 
     let resultDadosAluno = await controllerAluno.deletarAluno(idAluno)
 
-    if (resultDadosAluno.length != 0) {
         response.status(resultDadosAluno.status)
         response.json(resultDadosAluno)
-    } else {
-        message.ERROR_NOT_FOUND_ID
-    }
+    
 
 })
 
@@ -163,3 +149,10 @@ app.get('/v1/lion-school/aluno/nome/:nome', cors(), async function (request, res
 app.listen(8080, function () {
     console.log('Servidor Aguardando  requisições na porta 8080')
 })
+
+/************************************
+ * Objetivo: API de controle de professores
+ * Data: 12/05/2023
+ * Autor: Mateus Alves
+ * Versão: 1.0
+ ************************************/
